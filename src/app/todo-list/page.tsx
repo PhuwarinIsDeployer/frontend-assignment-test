@@ -52,7 +52,7 @@ export default function AutoDeleteTodoList() {
   };
 
   return (
-    <div className="grid grid-cols-3 gap-4 p-4 ">
+    <div className="grid grid-cols-3 gap-4 p-4 bg-black h-full min-h-screen">
       <div className="col-span-1 bg-custom-yellow p-4 rounded-lg">
         <h2 className="text-center font-bold mb-2">Todo Items</h2>
         {todoItems?.map(
