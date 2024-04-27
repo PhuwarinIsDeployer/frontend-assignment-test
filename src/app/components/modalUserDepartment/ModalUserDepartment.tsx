@@ -1,11 +1,11 @@
-import { User } from "@/app/types/user/user";
 import React from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
-import CardDetails from "../card-details/CardDetails";
+import CardDetails from "../cardDetails/CardDetails";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
+import { ModalUserDepartmentType } from "./type";
 
 const style = {
   position: "absolute",
@@ -21,13 +21,7 @@ const style = {
   borderRadius: "8px",
 };
 
-interface UserDepartmentModalProps {
-  users: User[];
-  isOpen: boolean;
-  handleClose: () => void;
-}
-
-const UserDepartmentModal: React.FC<UserDepartmentModalProps> = ({
+const ModalUserDepartment: React.FC<ModalUserDepartmentType> = ({
   users,
   isOpen,
   handleClose,
@@ -44,7 +38,11 @@ const UserDepartmentModal: React.FC<UserDepartmentModalProps> = ({
         },
       }}
     >
-      <Box sx={{ ...style, position: "relative" }}>
+      <Box
+        sx={{
+          ...style,
+        }}
+      >
         <IconButton
           aria-label="close"
           onClick={handleClose}
@@ -58,7 +56,7 @@ const UserDepartmentModal: React.FC<UserDepartmentModalProps> = ({
           <CloseIcon />
         </IconButton>
         <Typography
-          className="flex justify-center"
+          className="flex justify-center text-black"
           sx={{ fontWeight: "bold" }}
           id="modal-modal-title"
           variant="h4"
@@ -75,4 +73,4 @@ const UserDepartmentModal: React.FC<UserDepartmentModalProps> = ({
   );
 };
 
-export default UserDepartmentModal;
+export default ModalUserDepartment;

@@ -4,11 +4,12 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { CardDetailsType } from "./type";
+import placeholderImage from "../../../../public/assets/images/placeholder.png";
 
 const CardDetails: React.FC<CardDetailsType> = ({ user }) => {
   return (
     <Card
-      className="my-3 mx-2 p-4"
+      className="my-3 mx-2  bg-gray-600"
       sx={{
         maxWidth: 300,
         border: "1px solid rgba(0, 0, 0, 0.2)",
@@ -19,11 +20,12 @@ const CardDetails: React.FC<CardDetailsType> = ({ user }) => {
       <CardMedia
         component="img"
         height="40"
-        image={user.image}
+        image={user.image ?? placeholderImage.src}
         alt="green iguana"
+        sx={{ padding: "32px 32px 0px 32px" }}
       />
-      <CardContent>
-        <Typography gutterBottom variant="h5" component="div">
+      <CardContent className="bg-slate-200 h-full">
+        <Typography gutterBottom variant="h5">
           {user.firstName + " " + user.lastName}
         </Typography>
         <Typography>Gender : {user.gender}</Typography>

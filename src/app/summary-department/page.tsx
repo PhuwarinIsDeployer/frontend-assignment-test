@@ -2,13 +2,9 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { User } from "../types/user/user";
-import { useGroupUsersByDepartment } from "../hooks/summary-department/summary-department";
-import CircularProgress from "@mui/material/CircularProgress";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import UserDepartmentModal from "../components/user-department-modal/UserDepartmentModal";
+import { useGroupUsersByDepartment } from "../hooks/useGroupUsersByDepartment/useGroupUsersByDepartment";
+import CardDepartment from "../components/cardDepartment/CardDepartment";
+import LoadingScreen from "../components/loadinScreen/LoadingScreen";
 
 export default function SummaryDepartment() {
   const [users, setUsers] = useState<User[]>([]);
@@ -33,10 +29,6 @@ export default function SummaryDepartment() {
     fetchUsers();
   }, []);
 
-  useEffect(() => {
-    console.log("Hello : ", departmentData);
-  }, [departmentData]);
-
   const fetchUsers = async () => {
     try {
       const response = await axios.get("https://dummyjson.com/users?limit=100");
@@ -49,69 +41,19 @@ export default function SummaryDepartment() {
   };
 
   return isLoading ? (
-    <div className="flex justify-center items-center bg-white h-full min-h-screen">
-      <CircularProgress size={80} />
-    </div>
+    <LoadingScreen />
   ) : (
-    <div className="flex flex-wrap justify-center p-4 bg-white min-h-screen">
+    <div className="flex flex-wrap justify-center p-4 bg-black min-h-screen">
       {Object.entries(departmentData).map(([departmentName, details]) => (
-        <Card
-          sx={{ maxWidth: 345, m: 2, backgroundColor: "#4FA3A5" }}
+        <CardDepartment
           key={departmentName}
-        >
-          <CardContent className="flex flex-col justify-between h-full text-black">
-            <div>
-              <Typography sx={{ fontWeight: "bold" }} variant="h5">
-                {departmentName}
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                Total Employees: {details.users.length}
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                Males: {details.male}, Females: {details.female}
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                Age Range: {details.ageRange}
-              </Typography>
-              <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                Hair Colors:{" "}
-                {Object.entries(details.hair)
-                  .map(([color, count]) => `${color}: ${count}`)
-                  .join(", ")}
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                Addresses:{" "}
-                {Object.entries(details.addressUser)
-                  .map(([name, postal]) => `${name}: ${postal}`)
-                  .join(", ")}
-              </Typography>
-            </div>
-            <div className="mt-3 flex justify-center">
-              <Button
-                sx={{
-                  backgroundColor: "#FDAE38",
-                  color: "black",
-                  fontWeight: "bold",
-                  "&:hover": {
-                    backgroundColor: "#FFFFFF",
-                    color: "#FDAE38",
-                  },
-                }}
-                onClick={() => handleOpen(details.users)}
-                variant="contained"
-              >
-                Details
-              </Button>
-              {isOpenModal && selectedUser && (
-                <UserDepartmentModal
-                  users={selectedUser}
-                  isOpen={isOpenModal}
-                  handleClose={handleClose}
-                />
-              )}
-            </div>
-          </CardContent>
-        </Card>
+          departmentName={departmentName}
+          details={details}
+          handleClose={handleClose}
+          handleOpen={handleOpen}
+          isOpenModal={isOpenModal}
+          selectedUser={selectedUser ?? []}
+        />
       ))}
     </div>
   );

@@ -15,21 +15,18 @@ export function useGroupUsersByDepartment(users: User[]): DepartmentSummary {
           ageRange: "XX-XX",
           hair: {},
           addressUser: {},
-          users: [], // Initialize the array of users
+          users: [],
         };
       }
 
-      // Add the user to the department
       departmentSummary[department].users.push(user);
 
-      // Increment gender count
       if (user.gender === "male") {
         departmentSummary[department].male += 1;
       } else if (user.gender === "female") {
         departmentSummary[department].female += 1;
       }
 
-      // Update age range
       const age = user.age;
       const currentRange = departmentSummary[department].ageRange;
       const [minAge, maxAge] =
@@ -40,12 +37,10 @@ export function useGroupUsersByDepartment(users: User[]): DepartmentSummary {
       const newMaxAge = Math.max(maxAge, age);
       departmentSummary[department].ageRange = `${newMinAge}-${newMaxAge}`;
 
-      // Count hair colors
       const hairColor = user.hair.color;
       departmentSummary[department].hair[hairColor] =
         (departmentSummary[department].hair[hairColor] || 0) + 1;
 
-      // Map user name to postal code
       const fullName = user.firstName + user.lastName;
       departmentSummary[department].addressUser[fullName] =
         user.address.postalCode;

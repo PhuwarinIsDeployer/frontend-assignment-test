@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { CardImageButtonType } from "./type";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClock } from "@fortawesome/free-solid-svg-icons";
-
 const CardImageButton: React.FC<CardImageButtonType> = ({
   name,
   time,

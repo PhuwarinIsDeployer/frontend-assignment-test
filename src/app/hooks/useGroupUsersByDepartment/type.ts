@@ -1,7 +1,7 @@
 import { User } from "@/app/types/user/user";
 
 export interface DepartmentSummary {
-  [key: string]: {
+  [departmentName: string]: {
     male: number;
     female: number;
     ageRange: string;
