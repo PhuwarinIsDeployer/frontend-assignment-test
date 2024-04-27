@@ -1,11 +1,6 @@
-export type todoListItemsProps = {
-  type: string;
-  name: string;
-  isSelected?: boolean;
-  timerId?: number | null;
-};
+import { TodoListItemsType } from "../types/todo-list-item/todo-list-item";
 
-export const todoListItems: todoListItemsProps[] = [
+export const todoListItems: TodoListItemsType[] = [
   { type: "Fruit", name: "Apple" },
   { type: "Vegetable", name: "Broccoli" },
   { type: "Vegetable", name: "Mushroom" },

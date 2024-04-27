@@ -1,23 +1,21 @@
 "use client";
 import React, { useState } from "react";
-import {
-  todoListItemsProps,
-  todoListItems,
-} from "../mock-data/fruit-and-vegetable";
+import { todoListItems } from "../mock-data/fruit-and-vegetable";
 import Card from "../components/card-button/CardButton";
 import { TODO_TYPES } from "../constant/todo-type";
+import { TodoListItemsType } from "../types/todo-list-item/todo-list-item";
 
 export default function AutoDeleteTodoList() {
   const [todoItems, setTodoItems] =
-    useState<todoListItemsProps[]>(todoListItems);
-  const [timerIds, setTimerIds] = useState<todoListItemsProps[]>([]);
+    useState<TodoListItemsType[]>(todoListItems);
+  const [timerIds, setTimerIds] = useState<TodoListItemsType[]>([]);
 
-  const handleAddTodoList = (
+  const handleActionTodoList = (
     name: string,
     type: string,
     isAddList: boolean
   ) => {
-    const filterTodoList = todoItems.filter((filter) => filter.name !== name);
+    const filterTodoList = todoItems.filter((todo) => todo.name !== name);
 
     setTodoItems([
       ...filterTodoList,
@@ -30,24 +28,25 @@ export default function AutoDeleteTodoList() {
       const timerId = timerIds.find((timer) => timer.name === name)?.timerId;
       if (timerId) {
         clearTimeout(timerId);
-        setTimerIds((prevIds) =>
-          prevIds.filter((timer) => timer.timerId !== timerId)
+        setTimerIds((prevId) =>
+          prevId.filter((timer) => timer.timerId !== timerId)
         );
       }
     }
   };
 
   const handleDelay = (name: string, type: string) => {
-    const id = window.setTimeout(() => {
+    const id = setTimeout(() => {
       setTodoItems((prevItems) => {
         const remainingItems = prevItems.filter((item) => item.name !== name);
-        return [...remainingItems, { name, type, isSelected: false }];
+        return [...remainingItems, { type, name, isSelected: false }];
       });
+      setTimerIds((prevId) => prevId.filter((timer) => timer.name !== name));
     }, 5000);
 
-    setTimerIds((prevIds) => [
-      ...prevIds,
-      { name: name, type: type, timerId: id },
+    setTimerIds((prevId) => [
+      ...prevId,
+      { type: type, name: name, timerId: id },
     ]);
   };
 
@@ -61,7 +60,7 @@ export default function AutoDeleteTodoList() {
               <Card
                 key={item.name}
                 name={item?.name}
-                onClick={() => handleAddTodoList(item.name, item.type, true)}
+                onClick={() => handleActionTodoList(item.name, item.type, true)}
               />
             )
         )}
@@ -77,7 +76,9 @@ export default function AutoDeleteTodoList() {
                 key={item.name}
                 name={item?.name}
                 time={5}
-                onClick={() => handleAddTodoList(item.name, item.type, false)}
+                onClick={() =>
+                  handleActionTodoList(item.name, item.type, false)
+                }
               />
             )
         )}
@@ -93,7 +94,9 @@ export default function AutoDeleteTodoList() {
                 key={item.name}
                 name={item?.name}
                 time={5}
-                onClick={() => handleAddTodoList(item.name, item.type, false)}
+                onClick={() =>
+                  handleActionTodoList(item.name, item.type, false)
+                }
               />
             )
         )}
