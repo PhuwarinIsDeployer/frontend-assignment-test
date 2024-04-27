@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { CardButtonProps } from "./types";
+import { CardImageButtonType } from "./type";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClock } from "@fortawesome/free-solid-svg-icons";
 
-const CardButton: React.FC<CardButtonProps> = ({ name, time, onClick }) => {
+const CardImageButton: React.FC<CardImageButtonType> = ({
+  name,
+  time,
+  onClick,
+}) => {
   const [countdown, setCountdown] = useState(time);
 
   useEffect(() => {
@@ -39,4 +43,4 @@ const CardButton: React.FC<CardButtonProps> = ({ name, time, onClick }) => {
   );
 };
 
-export default CardButton;
+export default CardImageButton;

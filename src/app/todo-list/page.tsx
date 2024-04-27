@@ -1,9 +1,10 @@
 "use client";
 import React, { useState } from "react";
 import { todoListItems } from "../mock-data/fruit-and-vegetable";
-import Card from "../components/card-button/CardButton";
+
 import { TODO_TYPES } from "../constant/todo-type";
 import { TodoListItemsType } from "../types/todo-list-item/todo-list-item";
+import CardImageButton from "../components/card-image-button/CardImageButton";
 
 export default function AutoDeleteTodoList() {
   const [todoItems, setTodoItems] =
@@ -57,7 +58,7 @@ export default function AutoDeleteTodoList() {
         {todoItems?.map(
           (item) =>
             !item.isSelected && (
-              <Card
+              <CardImageButton
                 key={item.name}
                 name={item?.name}
                 onClick={() => handleActionTodoList(item.name, item.type, true)}
@@ -72,7 +73,7 @@ export default function AutoDeleteTodoList() {
           (item) =>
             item.type === TODO_TYPES.FRUIT &&
             item.isSelected && (
-              <Card
+              <CardImageButton
                 key={item.name}
                 name={item?.name}
                 time={5}
@@ -90,7 +91,7 @@ export default function AutoDeleteTodoList() {
           (item) =>
             item.type === TODO_TYPES.VEGETABLE &&
             item.isSelected && (
-              <Card
+              <CardImageButton
                 key={item.name}
                 name={item?.name}
                 time={5}
